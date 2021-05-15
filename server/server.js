@@ -32,6 +32,7 @@ app.post('/signin', (req, res) => { signin.handleSignin(db, bcrypt)(req, res) })
 
 app.put('/image', (req, res) => { image.handleImage(db)(req, res) })
 
+app.post('/imageUrl', (req,res) => { image.handleApiCall(req,res) })
 
 app.get('/profile/:id', (req, res) => { profile.handleProfile(db)(req, res) })
 

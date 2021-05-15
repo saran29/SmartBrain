@@ -7,12 +7,10 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import Particles from 'react-particles-js';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
-import Clarifai from 'clarifai';
 import SignIn from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
-const app = new Clarifai.App({
-  apiKey: '1f5e8eaa3839411aabaa88e759a03acd'
-});
+
+
 const particleOptions = {
   particles: {
     number: {
@@ -84,9 +82,14 @@ class App extends Component {
 
   onPictureSubmit = () => {
     this.setState({ imageUrl: this.state.input });
-    app.models.predict(
-      Clarifai.FACE_DETECT_MODEL,
-      this.state.input)
+    fetch('http://localhost:3000/imageUrl', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        input: this.state.input
+      })
+    })
+      .then(response => response.json())
       .then(response => {
         if (response)
           fetch('http://localhost:3000/image', {
@@ -95,7 +98,8 @@ class App extends Component {
             body: JSON.stringify({
               id: this.state.user.id
             })
-          }).then(response => response.json())
+          })
+            .then(response => response.json())
             .then(count => {
               this.setState(Object.assign(this.state.user, { entries: count }))
             })
