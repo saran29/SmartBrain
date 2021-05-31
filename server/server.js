@@ -8,6 +8,7 @@ const signin = require('./controllers/signin');
 const image = require('./controllers/image');
 const profile = require('./controllers/profile');
 
+const PORT = process.env.PORT;
 const db = knex({
     client: 'pg',
     connection: {
@@ -19,7 +20,7 @@ const db = knex({
 });
 
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 
 app.get('/', (req, res) => {
     db.select('*').from('users')
