@@ -21,8 +21,9 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req, res) => {
-    db.select('*').from('users')
-        .then(users => res.json(users))
+    // db.select('*').from('users')
+    //     .then(users => res.json(users))
+    console.log("It is working!");
 })
 
 app.post('/register', (req, res) => { register.handleRegister(db, bcrypt)(req, res) })
